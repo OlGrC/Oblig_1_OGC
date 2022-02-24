@@ -28,9 +28,17 @@ namespace Oblig_1_OGC
         {
             bool okToConnenct = true;
 
+            int.TryParse(BitRate_list.Text, out int bitRate);
+
             try
             {
                 serialPort1.PortName = COM_list.Text;
+                serialPort1.BaudRate = bitRate;
+            }
+            catch (FormatException ex)
+            {
+                okToConnenct = false;
+                MessageBox.Show(ex.Message);
             }
             catch (ArgumentException ex)
             {
@@ -55,7 +63,23 @@ namespace Oblig_1_OGC
         private void Disconnect_COM_button(object sender, EventArgs e)
         {
             serialPort1.Close();
-            ConnectionStatusWindow.AppendText("Status: Disconnected" + "\r\n");
+            if (!serialPort1.IsOpen)
+            {
+                ConnectionStatusWindow.AppendText("Status: Disconnected" + "\r\n");
+            }
+        }
+
+        private void read_config_button(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.WriteLine("readconf");
+            }
+            else
+            {
+                string message = "Not allowed!" + "\r\n" + "Establish connection first";
+                MessageBox.Show(message);
+            }
         }
     }
 }
