@@ -131,31 +131,40 @@ namespace Oblig_1_OGC
             saveFileDialog1.Filter = ("ssc files (*.ssc)|*.ssc|All files (*.*)|*.*");
             saveFileDialog1.FilterIndex = 2;
 
-            DialogResult dr = saveFileDialog1.ShowDialog();
-            fileNameWF = saveFileDialog1.FileName;
-            StreamWriter sw = new StreamWriter(fileNameWF);
 
-            try
+            if (serialPort1.IsOpen)
             {
-                if (dr == DialogResult.OK)
+                DialogResult dr = saveFileDialog1.ShowDialog();
+                fileNameWF = saveFileDialog1.FileName;
+                StreamWriter sw = new StreamWriter(fileNameWF);
+
+                try
                 {
-                    string[] save_string = { unit_ID_textBox.Text, ";", lrv_textBox.Text, ";",
+                    if (dr == DialogResult.OK)
+                    {
+                        string[] save_string = { unit_ID_textBox.Text, ";", lrv_textBox.Text, ";",
                           urv_textBox.Text, ";", alarm_L_textBox.Text, ";", alarm_H_textBox.Text};
 
-                    foreach (string line in save_string)
-                    {
-                        sw.Write(line);
+                        foreach (string line in save_string)
+                        {
+                            sw.Write(line);
+                        }
+                        MessageBox.Show("Successfully saved to " + fileNameWF);
                     }
-                    MessageBox.Show("Successfully saved to " + fileNameWF);
+                }
+                catch (System.ArgumentException)
+                {
+                    MessageBox.Show("Aborted!");
+                }
+                finally
+                {
+                    sw.Close();
                 }
             }
-            catch (ArgumentException ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                sw.Close();
+                string message = "Not allowed!" + "\r\n" + "Establish connection first";
+                MessageBox.Show(message);
             }
         }
 
@@ -179,34 +188,41 @@ namespace Oblig_1_OGC
 
             fileNameRF = openFileDialog1.FileName;
 
-            try
-            {
-                if (DialogResult.OK == openFileDialog1.ShowDialog())
-                {
-                    fileNameRF = openFileDialog1.FileName;
-                    MessageBox.Show("Chosen file is " + fileNameRF);
-                    successRF = true;
-                }
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                MessageBox.Show("No file chosen!");
-            }
-            finally
-            {
-                if (successRF)
-                {
-                    StreamReader sr = new StreamReader(fileNameRF);
-                    fileSplit = sr.ReadToEnd().Split(';');
-                    unit_ID_textBox2.Text = fileSplit[0];
-                    lrv_textBox2.Text = fileSplit[1];
-                    urv_textBox2.Text = fileSplit[2];
-                    alarm_L_textBox2.Text = fileSplit[3];
-                    alarm_H_textBox2.Text = fileSplit[4];
-                    MessageBox.Show("Parameters gathered from fil " + fileNameRF);
-                }
-            }
 
+            if (serialPort1.IsOpen)
+            {
+                try
+                {
+                    if (DialogResult.OK == openFileDialog1.ShowDialog())
+                    {
+                        fileNameRF = openFileDialog1.FileName;
+                        successRF = true;
+                    }
+                }
+                catch (System.IndexOutOfRangeException)
+                {
+                    MessageBox.Show("No file chosen!");
+                }
+                finally
+                {
+                    if (successRF)
+                    {
+                        StreamReader sr = new StreamReader(fileNameRF);
+                        fileSplit = sr.ReadToEnd().Split(';');
+                        unit_ID_textBox2.Text = fileSplit[0];
+                        lrv_textBox2.Text = fileSplit[1];
+                        urv_textBox2.Text = fileSplit[2];
+                        alarm_L_textBox2.Text = fileSplit[3];
+                        alarm_H_textBox2.Text = fileSplit[4];
+                        MessageBox.Show("Parameters gathered from fil " + fileNameRF);
+                    }
+                }
+            }
+            else
+            {
+                string message = "Not allowed!" + "\r\n" + "Establish connection first";
+                MessageBox.Show(message);
+            }
 
         }
 
@@ -221,19 +237,27 @@ namespace Oblig_1_OGC
 
         private void UploadeParametersClick(object sender, EventArgs e)
         {
-            string message, title, defaultValue;
-            object passwordInput;
+            if (serialPort1.IsOpen)
+            {
+                string message, title, defaultValue;
+                object passwordInput;
 
-            message = "Please enter password for this task";
-            title = "Login";
-            defaultValue = "********";
+                message = "Please enter password for this task";
+                title = "Login";
+                defaultValue = "********";
 
-            passwordInput = Interaction.InputBox(message, title, defaultValue);
+                passwordInput = Interaction.InputBox(message, title, defaultValue);
 
-            string sendMessage = "writeconf>" + passwordInput.ToString() + ">" + unit_ID_textBox2.Text + ";" + lrv_textBox2.Text + ";" 
-                                    + urv_textBox2.Text + ";" + alarm_L_textBox2.Text + ";" + alarm_H_textBox2.Text;
+                string sendMessage = "writeconf>" + passwordInput.ToString() + ">" + unit_ID_textBox2.Text + ";" + lrv_textBox2.Text + ";"
+                                        + urv_textBox2.Text + ";" + alarm_L_textBox2.Text + ";" + alarm_H_textBox2.Text;
 
-            serialPort1.WriteLine(sendMessage);
+                serialPort1.WriteLine(sendMessage);
+            }
+            else
+            {
+                string message = "Not allowed!" + "\r\n" + "Establish connection first";
+                MessageBox.Show(message);
+            }
         }
     }
 }
