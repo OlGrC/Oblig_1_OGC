@@ -6,8 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.IO;
+using System.Windows.Forms.DataVisualization.Charting;
+
 
 namespace Oblig_1_OGC
 {
@@ -16,6 +20,40 @@ namespace Oblig_1_OGC
         public Form1()
         {
             InitializeComponent();
+
+            serialPort1.DataReceived += new SerialDataReceivedEventHandler(DataRecivedHandler);
+
+        }
+        void DataRecivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            string RecievedData = ((SerialPort)sender).ReadLine();
+
+            if (RecievedData.Contains("readconf"))
+            {
+                string[] splitData = RecievedData.Split(';');
+
+                unit_ID_textBox.Text = splitData[1];
+                lrv_textBox.Text = splitData[2];
+                urv_textBox.Text = splitData[3];
+                alarm_L_textBox.Text = splitData[4];
+                alarm_H_textBox.Text = splitData[5];
+            }
+            if (RecievedData.Contains("writeconf"))
+            {
+                if (RecievedData.Contains("1"))
+                {
+                    MessageBox.Show("Password accepted!" + "\r\n" + "Parameters successfully changed");
+                }
+                else if (RecievedData.Contains(""))
+                {
+                    MessageBox.Show("Password not accepted!" + "\r\n" + "Try again");
+                }
+                else if (RecievedData.Contains ("You"))
+                {
+                    MessageBox.Show("Something wrong with input parameters!" + "\r\n" + "Try again");
+                }
+            }
+                
         }
 
         private void COM_select(object sender, EventArgs e)
@@ -41,6 +79,11 @@ namespace Oblig_1_OGC
                 MessageBox.Show(ex.Message);
             }
             catch (ArgumentException ex)
+            {
+                okToConnenct = false;
+                MessageBox.Show(ex.Message);
+            }
+            catch (System.IO.IOException ex)
             {
                 okToConnenct = false;
                 MessageBox.Show(ex.Message);
@@ -80,6 +123,117 @@ namespace Oblig_1_OGC
                 string message = "Not allowed!" + "\r\n" + "Establish connection first";
                 MessageBox.Show(message);
             }
+        }
+        private void save_to_file(object sender, EventArgs e)
+        {
+            string fileNameWF = string.Empty;
+            saveFileDialog1.InitialDirectory = "c:\\";
+            saveFileDialog1.Filter = ("ssc files (*.ssc)|*.ssc|All files (*.*)|*.*");
+            saveFileDialog1.FilterIndex = 2;
+
+            DialogResult dr = saveFileDialog1.ShowDialog();
+            fileNameWF = saveFileDialog1.FileName;
+            StreamWriter sw = new StreamWriter(fileNameWF);
+
+            try
+            {
+                if (dr == DialogResult.OK)
+                {
+                    string[] save_string = { unit_ID_textBox.Text, ";", lrv_textBox.Text, ";",
+                          urv_textBox.Text, ";", alarm_L_textBox.Text, ";", alarm_H_textBox.Text};
+
+                    foreach (string line in save_string)
+                    {
+                        sw.Write(line);
+                    }
+                    MessageBox.Show("Successfully saved to " + fileNameWF);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                sw.Close();
+            }
+        }
+
+        private void ResValuesClickDL(object sender, EventArgs e)
+        {
+            unit_ID_textBox.Clear();
+            lrv_textBox.Clear();   
+            urv_textBox.Clear();    
+            alarm_L_textBox.Clear();
+            alarm_H_textBox.Clear();
+        }
+
+        private void ReadFromFileClick(object sender, EventArgs e)
+        {
+            bool successRF = false;
+            string fileNameRF = string.Empty;
+            string[] fileSplit = new string[] { };
+            openFileDialog1.InitialDirectory = "C:\\";
+            openFileDialog1.Filter = ("ssc files (*.ssc)|*.ssc");
+            openFileDialog1.FilterIndex = 2;
+
+            fileNameRF = openFileDialog1.FileName;
+
+            try
+            {
+                if (DialogResult.OK == openFileDialog1.ShowDialog())
+                {
+                    fileNameRF = openFileDialog1.FileName;
+                    MessageBox.Show("Chosen file is " + fileNameRF);
+                    successRF = true;
+                }
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+                MessageBox.Show("No file chosen!");
+            }
+            finally
+            {
+                if (successRF)
+                {
+                    StreamReader sr = new StreamReader(fileNameRF);
+                    fileSplit = sr.ReadToEnd().Split(';');
+                    unit_ID_textBox2.Text = fileSplit[0];
+                    lrv_textBox2.Text = fileSplit[1];
+                    urv_textBox2.Text = fileSplit[2];
+                    alarm_L_textBox2.Text = fileSplit[3];
+                    alarm_H_textBox2.Text = fileSplit[4];
+                    MessageBox.Show("Parameters gathered from fil " + fileNameRF);
+                }
+            }
+
+
+        }
+
+        private void ResValuesClickUL(object sender, EventArgs e)
+        {
+            unit_ID_textBox2.Clear();
+            lrv_textBox2.Clear();
+            urv_textBox2.Clear();
+            alarm_L_textBox2.Clear();
+            alarm_H_textBox2.Clear();
+        }
+
+        private void UploadeParametersClick(object sender, EventArgs e)
+        {
+            string message, title, defaultValue;
+            object passwordInput;
+
+            message = "Please enter password for this task";
+            title = "Login";
+            defaultValue = "********";
+
+            passwordInput = Interaction.InputBox(message, title, defaultValue);
+
+            string sendMessage = "writeconf>" + passwordInput.ToString() + ">" + unit_ID_textBox2.Text + ";" + lrv_textBox2.Text + ";" 
+                                    + urv_textBox2.Text + ";" + alarm_L_textBox2.Text + ";" + alarm_H_textBox2.Text;
+
+            serialPort1.WriteLine(sendMessage);
         }
     }
 }
