@@ -29,9 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Connection = new System.Windows.Forms.TabPage();
+            this.ConnectionStatusLable = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.Connection_status = new System.Windows.Forms.ToolStripStatusLabel();
             this.ConnectionStatusWindow = new System.Windows.Forms.TextBox();
@@ -74,8 +78,14 @@
             this.lrv_lable = new System.Windows.Forms.Label();
             this.unit_id_lable = new System.Windows.Forms.Label();
             this.unit_ID_textBox = new System.Windows.Forms.TextBox();
+            this.MonitoringTab = new System.Windows.Forms.TabPage();
+            this.statusStrip3 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.timerScaled = new System.Windows.Forms.Timer(this.components);
+            this.timerRaw = new System.Windows.Forms.Timer(this.components);
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
             this.Connection.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -83,12 +93,16 @@
             this.statusStrip2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.MonitoringTab.SuspendLayout();
+            this.statusStrip3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.Connection);
             this.tabControl1.Controls.Add(this.ConfigTab);
+            this.tabControl1.Controls.Add(this.MonitoringTab);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
@@ -99,6 +113,7 @@
             // Connection
             // 
             this.Connection.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Connection.Controls.Add(this.ConnectionStatusLable);
             this.Connection.Controls.Add(this.statusStrip1);
             this.Connection.Controls.Add(this.ConnectionStatusWindow);
             this.Connection.Controls.Add(this.DisconnectCOMbutton);
@@ -114,6 +129,15 @@
             this.Connection.Size = new System.Drawing.Size(788, 519);
             this.Connection.TabIndex = 0;
             this.Connection.Text = "Connection";
+            // 
+            // ConnectionStatusLable
+            // 
+            this.ConnectionStatusLable.AutoSize = true;
+            this.ConnectionStatusLable.Location = new System.Drawing.Point(269, 36);
+            this.ConnectionStatusLable.Name = "ConnectionStatusLable";
+            this.ConnectionStatusLable.Size = new System.Drawing.Size(95, 13);
+            this.ConnectionStatusLable.TabIndex = 8;
+            this.ConnectionStatusLable.Text = "Connection status:";
             // 
             // statusStrip1
             // 
@@ -135,6 +159,7 @@
             this.Connection_status.Name = "Connection_status";
             this.Connection_status.Size = new System.Drawing.Size(34, 17);
             this.Connection_status.Text = "         ";
+            this.Connection_status.VisitedLinkColor = System.Drawing.Color.Blue;
             // 
             // ConnectionStatusWindow
             // 
@@ -288,6 +313,7 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(34, 17);
             this.toolStripStatusLabel1.Text = "         ";
+            this.toolStripStatusLabel1.VisitedLinkColor = System.Drawing.Color.Blue;
             // 
             // label2
             // 
@@ -647,9 +673,60 @@
             this.unit_ID_textBox.TabIndex = 5;
             this.unit_ID_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // MonitoringTab
+            // 
+            this.MonitoringTab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.MonitoringTab.Controls.Add(this.chart1);
+            this.MonitoringTab.Controls.Add(this.statusStrip3);
+            this.MonitoringTab.Location = new System.Drawing.Point(4, 22);
+            this.MonitoringTab.Name = "MonitoringTab";
+            this.MonitoringTab.Padding = new System.Windows.Forms.Padding(3);
+            this.MonitoringTab.Size = new System.Drawing.Size(788, 519);
+            this.MonitoringTab.TabIndex = 2;
+            this.MonitoringTab.Text = "Monitor";
+            // 
+            // statusStrip3
+            // 
+            this.statusStrip3.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip3.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel2});
+            this.statusStrip3.Location = new System.Drawing.Point(737, 2);
+            this.statusStrip3.Name = "statusStrip3";
+            this.statusStrip3.Size = new System.Drawing.Size(51, 22);
+            this.statusStrip3.TabIndex = 9;
+            this.statusStrip3.Text = "statusStrip3";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.ActiveLinkColor = System.Drawing.Color.Green;
+            this.toolStripStatusLabel2.BackColor = System.Drawing.Color.DimGray;
+            this.toolStripStatusLabel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(34, 17);
+            this.toolStripStatusLabel2.Text = "         ";
+            this.toolStripStatusLabel2.VisitedLinkColor = System.Drawing.Color.Blue;
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(6, 236);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(776, 277);
+            this.chart1.TabIndex = 10;
+            this.chart1.Text = "chart1";
             // 
             // Form1
             // 
@@ -674,6 +751,11 @@
             this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.MonitoringTab.ResumeLayout(false);
+            this.MonitoringTab.PerformLayout();
+            this.statusStrip3.ResumeLayout(false);
+            this.statusStrip3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -727,6 +809,13 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button ResValues2Button;
         private System.Windows.Forms.Button ResValuesButton;
+        private System.Windows.Forms.Label ConnectionStatusLable;
+        private System.Windows.Forms.TabPage MonitoringTab;
+        private System.Windows.Forms.StatusStrip statusStrip3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.Timer timerScaled;
+        private System.Windows.Forms.Timer timerRaw;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 

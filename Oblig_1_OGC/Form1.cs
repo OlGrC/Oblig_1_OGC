@@ -17,13 +17,33 @@ namespace Oblig_1_OGC
 {
     public partial class Form1 : Form
     {
+        List<int> scaledReading = new List<int>();
+        List<float> rawReading = new List<float>();
+        List<DateTime> Timestamp = new List<DateTime>();
+
         public Form1()
         {
             InitializeComponent();
 
             serialPort1.DataReceived += new SerialDataReceivedEventHandler(DataRecivedHandler);
 
+            timerScaled.Interval = 5000;
+            timerScaled.Tick += new EventHandler(timerScaled_Tick);
+
+            timerRaw.Interval = 5000;
+            timerRaw.Tick += new EventHandler(timerScaled_Tick);
+
         }
+        private void timerScaled_Tick(object sender, EventArgs e)
+        {
+            serialPort1.WriteLine("readscaled");
+        }
+
+        private void timerRaw_Tick(object sender, EventArgs e)
+        {
+            serialPort1.WriteLine("readraw");
+        }
+
         void DataRecivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             string RecievedData = ((SerialPort)sender).ReadLine();
