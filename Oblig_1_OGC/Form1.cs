@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using System.IO.Ports;
@@ -17,9 +18,10 @@ namespace Oblig_1_OGC
 {
     public partial class Form1 : Form
     {
-        List<int> scaledReading = new List<int>();
+        List<float> scaledReading = new List<float>();
         List<float> rawReading = new List<float>();
-        List<DateTime> Timestamp = new List<DateTime>();
+        List<string> timeStampScaled = new List<string>();
+        List<string> timeStampRaw = new List<string>();
 
         public Form1()
         {
@@ -31,7 +33,7 @@ namespace Oblig_1_OGC
             timerScaled.Tick += new EventHandler(timerScaled_Tick);
 
             timerRaw.Interval = 5000;
-            timerRaw.Tick += new EventHandler(timerScaled_Tick);
+            timerRaw.Tick += new EventHandler(timerRaw_Tick);
 
         }
         private void timerScaled_Tick(object sender, EventArgs e)
@@ -47,24 +49,27 @@ namespace Oblig_1_OGC
         void DataRecivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             string RecievedData = ((SerialPort)sender).ReadLine();
-
+            ConnectionStatusWindow.Invoke((MethodInvoker)delegate
+            {  
+            //Handeling return from readconf
             if (RecievedData.Contains("readconf"))
             {
                 string[] splitData = RecievedData.Split(';');
-
+                
                 unit_ID_textBox.Text = splitData[1];
                 lrv_textBox.Text = splitData[2];
                 urv_textBox.Text = splitData[3];
                 alarm_L_textBox.Text = splitData[4];
                 alarm_H_textBox.Text = splitData[5];
             }
-            if (RecievedData.Contains("writeconf"))
+            //Handeling return from writeconf
+            else if (RecievedData.Contains("writeconf"))
             {
                 if (RecievedData.Contains("1"))
                 {
                     MessageBox.Show("Password accepted!" + "\r\n" + "Parameters successfully changed");
                 }
-                else if (RecievedData.Contains(""))
+                else if (RecievedData.Contains("0"))
                 {
                     MessageBox.Show("Password not accepted!" + "\r\n" + "Try again");
                 }
@@ -73,7 +78,32 @@ namespace Oblig_1_OGC
                     MessageBox.Show("Something wrong with input parameters!" + "\r\n" + "Try again");
                 }
             }
-                
+            //Handeling return from readscaled
+            else if (RecievedData.Contains("readscaled"))
+            {
+                string[] splitData = RecievedData.Split(';');
+
+                scaledReading.Add(float.Parse(splitData[1], CultureInfo.InvariantCulture));
+                timeStampScaled.Add(DateAndTime.DateString + ";" + DateAndTime.TimeString);
+
+                chart1.Series[0].Points.DataBindXY(timeStampScaled, scaledReading);
+                chart1.Invalidate();    
+            }
+            //Handeling return from readraw
+            else if (RecievedData.Contains("readraw"))
+            {
+                string[] splitData = RecievedData.Split(';');
+
+                rawReading.Add(float.Parse(splitData[1], CultureInfo.InvariantCulture));
+                timeStampRaw.Add(DateAndTime.DateString + ";" + DateAndTime.TimeString);
+
+                chart1.Series[1].Points.DataBindXY(timeStampRaw, rawReading);
+                chart1.Invalidate();
+                ConnectionStatusWindow.AppendText(rawReading.ToString());
+            }
+            
+
+            });
         }
 
         private void COM_select(object sender, EventArgs e)
@@ -272,6 +302,75 @@ namespace Oblig_1_OGC
                                         + urv_textBox2.Text + ";" + alarm_L_textBox2.Text + ";" + alarm_H_textBox2.Text;
 
                 serialPort1.WriteLine(sendMessage);
+            }
+            else
+            {
+                string message = "Not allowed!" + "\r\n" + "Establish connection first";
+                MessageBox.Show(message);
+            }
+        }
+
+        private void MonitorScaledClick(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                timerScaled.Start();
+                timerScaled_Tick(null, null);
+            }
+            else
+            {
+                string message = "Not allowed!" + "\r\n" + "Establish connection first";
+                MessageBox.Show(message);
+            }
+        }
+
+        private void MonitorRawClick(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                rawReading.Clear();
+                timerRaw.Start();
+                timerRaw_Tick(null, null);
+            }
+            else
+            {
+                string message = "Not allowed!" + "\r\n" + "Establish connection first";
+                MessageBox.Show(message);
+            }
+        }
+
+        private void StopMonitoring(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                timerScaled.Stop();
+                timerRaw.Stop();
+
+                string message = "Do you wanna save logged values?";
+                string caption = "Save data?";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result = DialogResult.None;
+
+                try
+                {
+                    if (!timerRaw.Enabled)
+                    {
+                        result = MessageBox.Show(message, caption, buttons);
+                    }
+                }
+
+                finally
+                {
+                    if (result == DialogResult.Yes)
+                    {
+                        ConnectionStatusWindow.AppendText(String.Join(";", rawReading));
+
+
+                        /*
+                        string s = string.Join(";", rawReading);
+                        ConnectionStatusWindow.AppendText(s.ToString());*/
+                    }
+                }
             }
             else
             {
