@@ -37,7 +37,7 @@ namespace Oblig_1_OGC
 
             timerStatus.Interval = 2000;
             timerStatus.Tick += new EventHandler(timerStatus_Tick);
-            timerStatus.Start();
+            
         }
         private void timerScaled_Tick(object sender, EventArgs e)
         {
@@ -66,6 +66,8 @@ namespace Oblig_1_OGC
                 connectionStatus1.BackColor = Color.Black;
                 connectionStatus2.BackColor = Color.Black;
                 connectionStatus3.BackColor = Color.Black;
+                timerStatus.Stop();
+                MessageBox.Show("Disconnected!" + "\r\n" + "Check connection");
             }
         }
 
@@ -226,6 +228,7 @@ namespace Oblig_1_OGC
                 if (okToConnenct)
                 {
                     serialPort1.Open();
+                    timerStatus.Start();
                     ConnectionStatusWindow.AppendText("Status: Connected" + "\r\n");
                 }
             }
