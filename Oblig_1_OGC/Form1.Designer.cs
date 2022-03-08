@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Connection = new System.Windows.Forms.TabPage();
@@ -80,16 +80,19 @@
             this.unit_id_lable = new System.Windows.Forms.Label();
             this.unit_ID_textBox = new System.Windows.Forms.TextBox();
             this.MonitoringTab = new System.Windows.Forms.TabPage();
+            this.LoggedScaled = new System.Windows.Forms.ListBox();
+            this.LoggedRaw = new System.Windows.Forms.ListBox();
             this.StopMonitoringButton = new System.Windows.Forms.Button();
             this.MonitorRawButton = new System.Windows.Forms.Button();
             this.MonitorScaledButton = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.statusStrip3 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialogSSC = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.timerScaled = new System.Windows.Forms.Timer(this.components);
             this.timerRaw = new System.Windows.Forms.Timer(this.components);
+            this.saveFileDialogCSV = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.Connection.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -672,6 +675,8 @@
             // MonitoringTab
             // 
             this.MonitoringTab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.MonitoringTab.Controls.Add(this.LoggedScaled);
+            this.MonitoringTab.Controls.Add(this.LoggedRaw);
             this.MonitoringTab.Controls.Add(this.StopMonitoringButton);
             this.MonitoringTab.Controls.Add(this.MonitorRawButton);
             this.MonitoringTab.Controls.Add(this.MonitorScaledButton);
@@ -685,11 +690,29 @@
             this.MonitoringTab.TabIndex = 2;
             this.MonitoringTab.Text = "Monitor";
             // 
+            // LoggedScaled
+            // 
+            this.LoggedScaled.FormattingEnabled = true;
+            this.LoggedScaled.ItemHeight = 16;
+            this.LoggedScaled.Location = new System.Drawing.Point(802, 31);
+            this.LoggedScaled.Name = "LoggedScaled";
+            this.LoggedScaled.Size = new System.Drawing.Size(243, 292);
+            this.LoggedScaled.TabIndex = 16;
+            // 
+            // LoggedRaw
+            // 
+            this.LoggedRaw.FormattingEnabled = true;
+            this.LoggedRaw.ItemHeight = 16;
+            this.LoggedRaw.Location = new System.Drawing.Point(802, 323);
+            this.LoggedRaw.Name = "LoggedRaw";
+            this.LoggedRaw.Size = new System.Drawing.Size(244, 308);
+            this.LoggedRaw.TabIndex = 15;
+            // 
             // StopMonitoringButton
             // 
-            this.StopMonitoringButton.Location = new System.Drawing.Point(895, 260);
+            this.StopMonitoringButton.Location = new System.Drawing.Point(646, 252);
             this.StopMonitoringButton.Name = "StopMonitoringButton";
-            this.StopMonitoringButton.Size = new System.Drawing.Size(148, 23);
+            this.StopMonitoringButton.Size = new System.Drawing.Size(148, 31);
             this.StopMonitoringButton.TabIndex = 14;
             this.StopMonitoringButton.Text = "Stop monitoring";
             this.StopMonitoringButton.UseVisualStyleBackColor = true;
@@ -697,9 +720,9 @@
             // 
             // MonitorRawButton
             // 
-            this.MonitorRawButton.Location = new System.Drawing.Point(162, 260);
+            this.MonitorRawButton.Location = new System.Drawing.Point(162, 252);
             this.MonitorRawButton.Name = "MonitorRawButton";
-            this.MonitorRawButton.Size = new System.Drawing.Size(148, 23);
+            this.MonitorRawButton.Size = new System.Drawing.Size(148, 31);
             this.MonitorRawButton.TabIndex = 12;
             this.MonitorRawButton.Text = "Monitor raw";
             this.MonitorRawButton.UseVisualStyleBackColor = true;
@@ -707,9 +730,9 @@
             // 
             // MonitorScaledButton
             // 
-            this.MonitorScaledButton.Location = new System.Drawing.Point(8, 260);
+            this.MonitorScaledButton.Location = new System.Drawing.Point(8, 252);
             this.MonitorScaledButton.Name = "MonitorScaledButton";
-            this.MonitorScaledButton.Size = new System.Drawing.Size(148, 23);
+            this.MonitorScaledButton.Size = new System.Drawing.Size(148, 31);
             this.MonitorScaledButton.TabIndex = 11;
             this.MonitorScaledButton.Text = "Monitor scaled";
             this.MonitorScaledButton.UseVisualStyleBackColor = true;
@@ -717,26 +740,26 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(8, 290);
             this.chart1.Margin = new System.Windows.Forms.Padding(4);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Blue;
-            series1.Legend = "Legend1";
-            series1.Name = "Scaled value";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series2.Legend = "Legend1";
-            series2.Name = "Raw value";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(1035, 341);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Color = System.Drawing.Color.Blue;
+            series5.Legend = "Legend1";
+            series5.Name = "Scaled value";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series6.Legend = "Legend1";
+            series6.Name = "Raw value";
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
+            this.chart1.Size = new System.Drawing.Size(786, 341);
             this.chart1.TabIndex = 10;
             this.chart1.Text = "chart1";
             // 
@@ -763,9 +786,9 @@
             this.toolStripStatusLabel2.Text = "         ";
             this.toolStripStatusLabel2.VisitedLinkColor = System.Drawing.Color.Blue;
             // 
-            // openFileDialog1
+            // openFileDialogSSC
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialogSSC.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -844,7 +867,7 @@
         private System.Windows.Forms.TextBox urv_textBox2;
         private System.Windows.Forms.TextBox alarm_L_textBox2;
         private System.Windows.Forms.TextBox alarm_H_textBox2;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialogSSC;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button ResValues2Button;
         private System.Windows.Forms.Button ResValuesButton;
@@ -858,6 +881,9 @@
         private System.Windows.Forms.Button MonitorScaledButton;
         private System.Windows.Forms.Button StopMonitoringButton;
         private System.Windows.Forms.Button MonitorRawButton;
+        private System.Windows.Forms.ListBox LoggedRaw;
+        private System.Windows.Forms.ListBox LoggedScaled;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogCSV;
     }
 }
 

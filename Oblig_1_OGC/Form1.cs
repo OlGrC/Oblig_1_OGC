@@ -22,7 +22,7 @@ namespace Oblig_1_OGC
         List<float> rawReading = new List<float>();
         List<string> timeStampScaled = new List<string>();
         List<string> timeStampRaw = new List<string>();
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -82,9 +82,11 @@ namespace Oblig_1_OGC
             else if (RecievedData.Contains("readscaled"))
             {
                 string[] splitData = RecievedData.Split(';');
+                string date = DateAndTime.DateString + ";" + DateAndTime.TimeString;
+                LoggedScaled.Items.Add(date + ";" + splitData[1]);
 
                 scaledReading.Add(float.Parse(splitData[1], CultureInfo.InvariantCulture));
-                timeStampScaled.Add(DateAndTime.DateString + ";" + DateAndTime.TimeString);
+                timeStampScaled.Add(date);
 
                 chart1.Series[0].Points.DataBindXY(timeStampScaled, scaledReading);
                 chart1.Invalidate();    
@@ -93,13 +95,16 @@ namespace Oblig_1_OGC
             else if (RecievedData.Contains("readraw"))
             {
                 string[] splitData = RecievedData.Split(';');
+                string date = DateAndTime.DateString + ";" + DateAndTime.TimeString;
 
                 rawReading.Add(float.Parse(splitData[1], CultureInfo.InvariantCulture));
-                timeStampRaw.Add(DateAndTime.DateString + ";" + DateAndTime.TimeString);
+                LoggedRaw.Items.Add(date + ";" + splitData[1]);
+
+                timeStampRaw.Add(date);
 
                 chart1.Series[1].Points.DataBindXY(timeStampRaw, rawReading);
                 chart1.Invalidate();
-                ConnectionStatusWindow.AppendText(rawReading.ToString());
+
             }
             
 
@@ -232,20 +237,20 @@ namespace Oblig_1_OGC
             bool successRF = false;
             string fileNameRF = string.Empty;
             string[] fileSplit = new string[] { };
-            openFileDialog1.InitialDirectory = "C:\\";
-            openFileDialog1.Filter = ("ssc files (*.ssc)|*.ssc");
-            openFileDialog1.FilterIndex = 2;
+            openFileDialogSSC.InitialDirectory = "C:\\";
+            openFileDialogSSC.Filter = ("ssc files (*.ssc)|*.ssc");
+            openFileDialogSSC.FilterIndex = 2;
 
-            fileNameRF = openFileDialog1.FileName;
+            fileNameRF = openFileDialogSSC.FileName;
 
 
             if (serialPort1.IsOpen)
             {
                 try
                 {
-                    if (DialogResult.OK == openFileDialog1.ShowDialog())
+                    if (DialogResult.OK == openFileDialogSSC.ShowDialog())
                     {
-                        fileNameRF = openFileDialog1.FileName;
+                        fileNameRF = openFileDialogSSC.FileName;
                         successRF = true;
                     }
                 }
@@ -328,7 +333,6 @@ namespace Oblig_1_OGC
         {
             if (serialPort1.IsOpen)
             {
-                rawReading.Clear();
                 timerRaw.Start();
                 timerRaw_Tick(null, null);
             }
@@ -350,25 +354,45 @@ namespace Oblig_1_OGC
                 string caption = "Save data?";
                 MessageBoxButtons buttons = MessageBoxButtons.YesNo;
                 DialogResult result = DialogResult.None;
+                result = MessageBox.Show(message, caption, buttons);
 
-                try
+                saveFileDialogCSV.InitialDirectory = "c:\\"; 
+                saveFileDialogCSV.Filter = "CSV file (.csv)|.csv|All files (.)|.";
+                
+                
+                if (result == DialogResult.Yes)
                 {
-                    if (!timerRaw.Enabled)
+                    if (LoggedRaw.Items.Count > 0)
                     {
-                        result = MessageBox.Show(message, caption, buttons);
+                        saveFileDialogCSV.Title = "Save Raw Data";
+                        string saveRaw;
+                        saveFileDialogCSV.ShowDialog();
+                        string fileName = saveFileDialogCSV.FileName;
+                        StreamWriter swR = new StreamWriter(fileName);
+
+                        foreach (var item in LoggedRaw.Items)
+                        {
+                            saveRaw = item.ToString();
+                            swR.Write(saveRaw);
+                        }
+                    swR.Close();
+                    LoggedRaw.Items.Clear();
                     }
-                }
-
-                finally
-                {
-                    if (result == DialogResult.Yes)
+                    if (LoggedScaled.Items.Count > 0)
                     {
-                        ConnectionStatusWindow.AppendText(String.Join(";", rawReading));
+                        saveFileDialogCSV.Title = "Save Scaled Data";
+                        string saveScaled;
+                        saveFileDialogCSV.ShowDialog();
+                        string fileName = saveFileDialogCSV.FileName;
+                        StreamWriter swS = new StreamWriter(fileName);
 
-
-                        /*
-                        string s = string.Join(";", rawReading);
-                        ConnectionStatusWindow.AppendText(s.ToString());*/
+                        foreach (var item in LoggedScaled.Items)
+                        {
+                            saveScaled = item.ToString();
+                            swS.Write(saveScaled);
+                        }
+                        swS.Close();
+                        LoggedScaled.Items.Clear();
                     }
                 }
             }
