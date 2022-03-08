@@ -35,6 +35,9 @@ namespace Oblig_1_OGC
             timerRaw.Interval = 5000;
             timerRaw.Tick += new EventHandler(timerRaw_Tick);
 
+            timerStatus.Interval = 2000;
+            timerStatus.Tick += new EventHandler(timerStatus_Tick);
+            timerStatus.Start();
         }
         private void timerScaled_Tick(object sender, EventArgs e)
         {
@@ -46,11 +49,83 @@ namespace Oblig_1_OGC
             serialPort1.WriteLine("readraw");
         }
 
+        private void timerStatus_Tick(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.WriteLine("readstatus");
+            }
+            else if(!serialPort1.IsOpen)
+            {
+                connectionStatus1.Text = "Disconnected";
+                connectionStatus2.Text = "Disconnected";
+                connectionStatus3.Text = "Disconnected";
+                connectionStatus1.ForeColor = Color.White;
+                connectionStatus2.ForeColor = Color.White;
+                connectionStatus3.ForeColor = Color.White;
+                connectionStatus1.BackColor = Color.Black;
+                connectionStatus2.BackColor = Color.Black;
+                connectionStatus3.BackColor = Color.Black;
+            }
+        }
+
         void DataRecivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             string RecievedData = ((SerialPort)sender).ReadLine();
             ConnectionStatusWindow.Invoke((MethodInvoker)delegate
             {  
+            //Handeling return from readstatus
+            if (RecievedData.Contains("readstatus"))
+            {                
+                if (RecievedData.Contains("0"))
+                {
+                    connectionStatus1.Text = "Connected";
+                    connectionStatus2.Text = "Connected";
+                    connectionStatus3.Text = "Connected";
+                    connectionStatus1.ForeColor = Color.Black;
+                    connectionStatus2.ForeColor = Color.Black;
+                    connectionStatus3.ForeColor = Color.Black;
+                    connectionStatus1.BackColor = Color.Green;
+                    connectionStatus2.BackColor = Color.Green;
+                    connectionStatus3.BackColor = Color.Green;
+                }
+                else if (RecievedData.Contains("1"))
+                {
+                    connectionStatus1.Text = "Warning!";
+                    connectionStatus2.Text = "Warning!";
+                    connectionStatus3.Text = "Warning!";
+                    connectionStatus1.ForeColor = Color.Black;
+                    connectionStatus2.ForeColor = Color.Black;
+                    connectionStatus3.ForeColor = Color.Black;
+                    connectionStatus1.BackColor = Color.Yellow;
+                    connectionStatus2.BackColor = Color.Yellow;
+                    connectionStatus3.BackColor = Color.Yellow;
+                }
+                else if (RecievedData.Contains("2"))
+                {
+                    connectionStatus1.Text = "Alarm LOW";
+                    connectionStatus2.Text = "Alarm LOW";
+                    connectionStatus3.Text = "Alarm LOW";
+                    connectionStatus1.ForeColor = Color.Black;
+                    connectionStatus2.ForeColor = Color.Black;
+                    connectionStatus3.ForeColor = Color.Black;
+                    connectionStatus1.BackColor = Color.Red;
+                    connectionStatus2.BackColor = Color.Red;
+                    connectionStatus3.BackColor = Color.Red;
+                }
+                else if (RecievedData.Contains("3"))
+                {
+                    connectionStatus1.Text = "Alarm HIGH";
+                    connectionStatus2.Text = "Alarm HIGH";
+                    connectionStatus3.Text = "Alarm HIGH";
+                    connectionStatus1.ForeColor = Color.Black;
+                    connectionStatus2.ForeColor = Color.Black;
+                    connectionStatus3.ForeColor = Color.Black;
+                    connectionStatus1.BackColor = Color.Red;
+                    connectionStatus2.BackColor = Color.Red;
+                    connectionStatus3.BackColor = Color.Red;
+                }
+            }
             //Handeling return from readconf
             if (RecievedData.Contains("readconf"))
             {
@@ -106,8 +181,6 @@ namespace Oblig_1_OGC
                 chart1.Invalidate();
 
             }
-            
-
             });
         }
 
@@ -364,35 +437,54 @@ namespace Oblig_1_OGC
                 {
                     if (LoggedRaw.Items.Count > 0)
                     {
-                        saveFileDialogCSV.Title = "Save Raw Data";
-                        string saveRaw;
-                        saveFileDialogCSV.ShowDialog();
-                        string fileName = saveFileDialogCSV.FileName;
-                        StreamWriter swR = new StreamWriter(fileName);
-
-                        foreach (var item in LoggedRaw.Items)
+                        try
                         {
-                            saveRaw = item.ToString();
-                            swR.Write(saveRaw);
+                            saveFileDialogCSV.Title = "Save Raw Data";
+                            string saveRaw;
+                            saveFileDialogCSV.ShowDialog();
+                            string fileName = saveFileDialogCSV.FileName;
+                            StreamWriter swR = new StreamWriter(fileName);
+
+                            foreach (var item in LoggedRaw.Items)
+                            {
+                                saveRaw = item.ToString();
+                                swR.Write(saveRaw);
+                            }
+                            swR.Close();
                         }
-                    swR.Close();
-                    LoggedRaw.Items.Clear();
+                        catch (Exception)
+                        {}
+                        finally
+                        {
+                            
+                            LoggedRaw.Items.Clear();
+                        }
+
+
                     }
                     if (LoggedScaled.Items.Count > 0)
                     {
-                        saveFileDialogCSV.Title = "Save Scaled Data";
-                        string saveScaled;
-                        saveFileDialogCSV.ShowDialog();
-                        string fileName = saveFileDialogCSV.FileName;
-                        StreamWriter swS = new StreamWriter(fileName);
-
-                        foreach (var item in LoggedScaled.Items)
+                        try
                         {
-                            saveScaled = item.ToString();
-                            swS.Write(saveScaled);
+                            saveFileDialogCSV.Title = "Save Scaled Data";
+                            string saveScaled;
+                            saveFileDialogCSV.ShowDialog();
+                            string fileName = saveFileDialogCSV.FileName;
+                            StreamWriter swS = new StreamWriter(fileName);
+
+                            foreach (var item in LoggedScaled.Items)
+                            {
+                                saveScaled = item.ToString();
+                                swS.Write(saveScaled);
+                            }
+                            swS.Close();
                         }
-                        swS.Close();
-                        LoggedScaled.Items.Clear();
+                        catch (Exception)
+                        {}
+                        finally
+                        {
+                            LoggedScaled.Items.Clear();
+                        }
                     }
                 }
             }
