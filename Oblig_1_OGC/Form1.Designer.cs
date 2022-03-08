@@ -643,23 +643,23 @@
             // 
             this.LoggedScaled.FormattingEnabled = true;
             this.LoggedScaled.ItemHeight = 16;
-            this.LoggedScaled.Location = new System.Drawing.Point(802, 31);
+            this.LoggedScaled.Location = new System.Drawing.Point(7, 350);
             this.LoggedScaled.Name = "LoggedScaled";
-            this.LoggedScaled.Size = new System.Drawing.Size(243, 292);
+            this.LoggedScaled.Size = new System.Drawing.Size(488, 292);
             this.LoggedScaled.TabIndex = 16;
             // 
             // LoggedRaw
             // 
             this.LoggedRaw.FormattingEnabled = true;
             this.LoggedRaw.ItemHeight = 16;
-            this.LoggedRaw.Location = new System.Drawing.Point(802, 323);
+            this.LoggedRaw.Location = new System.Drawing.Point(529, 350);
             this.LoggedRaw.Name = "LoggedRaw";
-            this.LoggedRaw.Size = new System.Drawing.Size(244, 308);
+            this.LoggedRaw.Size = new System.Drawing.Size(516, 292);
             this.LoggedRaw.TabIndex = 15;
             // 
             // StopMonitoringButton
             // 
-            this.StopMonitoringButton.Location = new System.Drawing.Point(646, 252);
+            this.StopMonitoringButton.Location = new System.Drawing.Point(316, 313);
             this.StopMonitoringButton.Name = "StopMonitoringButton";
             this.StopMonitoringButton.Size = new System.Drawing.Size(148, 31);
             this.StopMonitoringButton.TabIndex = 14;
@@ -669,7 +669,7 @@
             // 
             // MonitorRawButton
             // 
-            this.MonitorRawButton.Location = new System.Drawing.Point(162, 252);
+            this.MonitorRawButton.Location = new System.Drawing.Point(162, 313);
             this.MonitorRawButton.Name = "MonitorRawButton";
             this.MonitorRawButton.Size = new System.Drawing.Size(148, 31);
             this.MonitorRawButton.TabIndex = 12;
@@ -679,7 +679,7 @@
             // 
             // MonitorScaledButton
             // 
-            this.MonitorScaledButton.Location = new System.Drawing.Point(8, 252);
+            this.MonitorScaledButton.Location = new System.Drawing.Point(8, 313);
             this.MonitorScaledButton.Name = "MonitorScaledButton";
             this.MonitorScaledButton.Size = new System.Drawing.Size(148, 31);
             this.MonitorScaledButton.TabIndex = 11;
@@ -693,7 +693,7 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(8, 290);
+            this.chart1.Location = new System.Drawing.Point(7, 8);
             this.chart1.Margin = new System.Windows.Forms.Padding(4);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
@@ -708,7 +708,7 @@
             series2.Name = "Raw value";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(786, 341);
+            this.chart1.Size = new System.Drawing.Size(1038, 298);
             this.chart1.TabIndex = 10;
             this.chart1.Text = "chart1";
             // 
@@ -732,9 +732,11 @@
             // 
             // connectionStatus3
             // 
-            this.connectionStatus3.Location = new System.Drawing.Point(960, 0);
+            this.connectionStatus3.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.connectionStatus3.Location = new System.Drawing.Point(952, 313);
+            this.connectionStatus3.Multiline = true;
             this.connectionStatus3.Name = "connectionStatus3";
-            this.connectionStatus3.Size = new System.Drawing.Size(93, 22);
+            this.connectionStatus3.Size = new System.Drawing.Size(93, 31);
             this.connectionStatus3.TabIndex = 17;
             // 
             // Form1

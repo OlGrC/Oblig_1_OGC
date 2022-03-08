@@ -35,7 +35,7 @@ namespace Oblig_1_OGC
             timerRaw.Interval = 5000;
             timerRaw.Tick += new EventHandler(timerRaw_Tick);
 
-            timerStatus.Interval = 2000;
+            timerStatus.Interval = 5000;
             timerStatus.Tick += new EventHandler(timerStatus_Tick);
             
         }
