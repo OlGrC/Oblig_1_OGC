@@ -528,7 +528,7 @@ namespace Oblig_1_OGC
                         {}
                         finally
                         {
-                            LoggedRaw.Items.Clear();
+                            LoggedScaled.Items.Clear();
                         }
                     }
                     else if (LoggedScaled.Items.Count <= 0)
