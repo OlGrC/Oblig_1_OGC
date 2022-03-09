@@ -57,6 +57,7 @@ namespace Oblig_1_OGC
             }
             else if(!serialPort1.IsOpen)
             {
+                timerStatus.Stop();
                 connectionStatus1.Text = "Disconnected";
                 connectionStatus2.Text = "Disconnected";
                 connectionStatus3.Text = "Disconnected";
@@ -66,7 +67,7 @@ namespace Oblig_1_OGC
                 connectionStatus1.BackColor = Color.Black;
                 connectionStatus2.BackColor = Color.Black;
                 connectionStatus3.BackColor = Color.Black;
-                timerStatus.Stop();
+                ConnectionStatusWindow.AppendText("Status: Disconnected" + "\r\n");
                 MessageBox.Show("Disconnected!" + "\r\n" + "Check connection");
             }
         }
@@ -229,7 +230,11 @@ namespace Oblig_1_OGC
                 {
                     serialPort1.Open();
                     timerStatus.Start();
-                    ConnectionStatusWindow.AppendText("Status: Connected" + "\r\n");
+                    if (serialPort1.IsOpen)
+                    {
+                        ConnectionStatusWindow.AppendText("Status: Connected" + "\r\n");
+                    }
+                    
                 }
             }
         }
@@ -263,16 +268,22 @@ namespace Oblig_1_OGC
             saveFileDialog1.FilterIndex = 2;
 
 
-            if (serialPort1.IsOpen)
+            if (serialPort1.IsOpen
+                && unit_ID_textBox.Text.Length > 0
+                && lrv_textBox.Text.Length > 0
+                && urv_textBox.Text.Length > 0
+                && alarm_L_textBox.Text.Length > 0
+                && alarm_H_textBox.Text.Length > 0)
             {
                 DialogResult dr = saveFileDialog1.ShowDialog();
                 fileNameWF = saveFileDialog1.FileName;
-                StreamWriter sw = new StreamWriter(fileNameWF);
+                bool saveSucess = false;
 
                 try
                 {
-                    if (dr == DialogResult.OK)
+                    if (dr == DialogResult.OK )
                     {
+                        StreamWriter sw = new StreamWriter(fileNameWF);
                         string[] save_string = { unit_ID_textBox.Text, ";", lrv_textBox.Text, ";",
                           urv_textBox.Text, ";", alarm_L_textBox.Text, ";", alarm_H_textBox.Text};
 
@@ -280,17 +291,34 @@ namespace Oblig_1_OGC
                         {
                             sw.Write(line);
                         }
-                        MessageBox.Show("Successfully saved to " + fileNameWF);
+                        sw.Close();
+                        saveSucess = true;
                     }
                 }
-                catch (System.ArgumentException)
+                catch (Exception)
                 {
-                    MessageBox.Show("Aborted!");
+                    saveSucess = false;
                 }
                 finally
                 {
-                    sw.Close();
+                    if (saveSucess)
+                    {
+                        MessageBox.Show("Successfully saved to " + fileNameWF);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No parameters was saved");
+                    }
                 }
+            }
+            else if (serialPort1.IsOpen
+                    &&unit_ID_textBox.Text.Length <= 0
+                    && lrv_textBox.Text.Length <= 0
+                    && urv_textBox.Text.Length <= 0
+                    && alarm_L_textBox.Text.Length <= 0
+                    && alarm_H_textBox.Text.Length <= 0)
+            {
+                MessageBox.Show("Try again!" + "\r\n" + "All parameterwindows must be filled");
             }
             else
             {
@@ -314,7 +342,7 @@ namespace Oblig_1_OGC
             string fileNameRF = string.Empty;
             string[] fileSplit = new string[] { };
             openFileDialogSSC.InitialDirectory = "C:\\";
-            openFileDialogSSC.Filter = ("ssc files (*.ssc)|*.ssc");
+            openFileDialogSSC.Filter = ("ssc files (*.ssc)|*.ssc|All files (*.*)|*.*");
             openFileDialogSSC.FilterIndex = 2;
 
             fileNameRF = openFileDialogSSC.FileName;
@@ -368,7 +396,12 @@ namespace Oblig_1_OGC
 
         private void UploadeParametersClick(object sender, EventArgs e)
         {
-            if (serialPort1.IsOpen)
+            if (serialPort1.IsOpen
+                && unit_ID_textBox2.Text.Length > 0
+                && lrv_textBox2.Text.Length > 0
+                && urv_textBox2.Text.Length > 0
+                && alarm_L_textBox2.Text.Length > 0
+                && alarm_H_textBox2.Text.Length > 0)
             {
                 string message, title, defaultValue;
                 object passwordInput;
@@ -383,6 +416,15 @@ namespace Oblig_1_OGC
                                         + urv_textBox2.Text + ";" + alarm_L_textBox2.Text + ";" + alarm_H_textBox2.Text;
 
                 serialPort1.WriteLine(sendMessage);
+            }
+            else if (serialPort1.IsOpen
+                    &&unit_ID_textBox2.Text.Length <= 0
+                    && lrv_textBox2.Text.Length <= 0
+                    && urv_textBox2.Text.Length <= 0
+                    && alarm_L_textBox2.Text.Length <= 0
+                    && alarm_H_textBox2.Text.Length <= 0)
+            {
+                MessageBox.Show("Try again!" + "\r\n" + "All parameterwindows must be filled");
             }
             else
             {
@@ -459,20 +501,24 @@ namespace Oblig_1_OGC
                         {}
                         finally
                         {
-                            
                             LoggedRaw.Items.Clear();
                         }
 
 
                     }
+                    else if (LoggedRaw.Items.Count <= 0)
+                    {
+                        MessageBox.Show("Raw data not saved because there was no data to save");
+                    }
                     if (LoggedScaled.Items.Count > 0)
                     {
+                        string fileName = saveFileDialogCSV.FileName;
+
                         try
                         {
                             saveFileDialogCSV.Title = "Save Scaled Data";
                             string saveScaled;
                             saveFileDialogCSV.ShowDialog();
-                            string fileName = saveFileDialogCSV.FileName;
                             StreamWriter swS = new StreamWriter(fileName);
 
                             foreach (var item in LoggedScaled.Items)
@@ -486,8 +532,12 @@ namespace Oblig_1_OGC
                         {}
                         finally
                         {
-                            LoggedScaled.Items.Clear();
+                            LoggedRaw.Items.Clear();
                         }
+                    }
+                    else if (LoggedScaled.Items.Count <= 0)
+                    {
+                        MessageBox.Show("Scaled data not saved because there was no data to save");
                     }
                 }
             }
