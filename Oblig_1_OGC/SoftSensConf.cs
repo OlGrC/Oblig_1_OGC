@@ -338,7 +338,7 @@ namespace Oblig_1_OGC
             string fileNameRF = string.Empty;
             string[] fileSplit = new string[] { };
             openFileDialogSSC.InitialDirectory = "C:\\";
-            openFileDialogSSC.Filter = ("ssc files (*.ssc)|*.ssc|All files (.)|.");
+            openFileDialogSSC.Filter = ("ssc files (*.ssc)|*.ssc|All files (*.*)|*.*");
             openFileDialogSSC.FilterIndex = 2;
 
             fileNameRF = openFileDialogSSC.FileName;
