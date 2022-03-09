@@ -242,10 +242,6 @@ namespace Oblig_1_OGC
         private void Disconnect_COM_button(object sender, EventArgs e)
         {
             serialPort1.Close();
-            if (!serialPort1.IsOpen)
-            {
-                ConnectionStatusWindow.AppendText("Status: Disconnected" + "\r\n");
-            }
         }
 
         private void read_config_button(object sender, EventArgs e)
