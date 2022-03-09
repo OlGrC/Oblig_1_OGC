@@ -1,6 +1,6 @@
 ﻿namespace Oblig_1_OGC
 {
-    partial class Form1
+    partial class SoftSensConf
     {
         /// <summary>
         /// Required designer variable.
@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Connection = new System.Windows.Forms.TabPage();
@@ -106,7 +106,7 @@
             this.tabControl1.Controls.Add(this.ConfigTab);
             this.tabControl1.Controls.Add(this.MonitoringTab);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(796, 545);
@@ -125,9 +125,9 @@
             this.Connection.Controls.Add(this.BitRate_list);
             this.Connection.Controls.Add(this.COM_list);
             this.Connection.Location = new System.Drawing.Point(4, 22);
-            this.Connection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Connection.Margin = new System.Windows.Forms.Padding(2);
             this.Connection.Name = "Connection";
-            this.Connection.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Connection.Padding = new System.Windows.Forms.Padding(2);
             this.Connection.Size = new System.Drawing.Size(788, 519);
             this.Connection.TabIndex = 0;
             this.Connection.Text = "Connection";
@@ -137,7 +137,7 @@
             this.connectionStatus1.BackColor = System.Drawing.Color.Black;
             this.connectionStatus1.ForeColor = System.Drawing.Color.White;
             this.connectionStatus1.Location = new System.Drawing.Point(714, 0);
-            this.connectionStatus1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.connectionStatus1.Margin = new System.Windows.Forms.Padding(2);
             this.connectionStatus1.Name = "connectionStatus1";
             this.connectionStatus1.Size = new System.Drawing.Size(75, 20);
             this.connectionStatus1.TabIndex = 9;
@@ -166,7 +166,7 @@
             this.DisconnectCOMbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisconnectCOMbutton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.DisconnectCOMbutton.Location = new System.Drawing.Point(81, 188);
-            this.DisconnectCOMbutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DisconnectCOMbutton.Margin = new System.Windows.Forms.Padding(2);
             this.DisconnectCOMbutton.Name = "DisconnectCOMbutton";
             this.DisconnectCOMbutton.Size = new System.Drawing.Size(91, 24);
             this.DisconnectCOMbutton.TabIndex = 5;
@@ -180,7 +180,7 @@
             this.ConnectCOMbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ConnectCOMbutton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ConnectCOMbutton.Location = new System.Drawing.Point(81, 142);
-            this.ConnectCOMbutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ConnectCOMbutton.Margin = new System.Windows.Forms.Padding(2);
             this.ConnectCOMbutton.Name = "ConnectCOMbutton";
             this.ConnectCOMbutton.Size = new System.Drawing.Size(91, 24);
             this.ConnectCOMbutton.TabIndex = 4;
@@ -225,7 +225,7 @@
             "57600",
             "115200"});
             this.BitRate_list.Location = new System.Drawing.Point(81, 100);
-            this.BitRate_list.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BitRate_list.Margin = new System.Windows.Forms.Padding(2);
             this.BitRate_list.Name = "BitRate_list";
             this.BitRate_list.Size = new System.Drawing.Size(92, 21);
             this.BitRate_list.TabIndex = 1;
@@ -235,7 +235,7 @@
             // 
             this.COM_list.FormattingEnabled = true;
             this.COM_list.Location = new System.Drawing.Point(81, 55);
-            this.COM_list.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.COM_list.Margin = new System.Windows.Forms.Padding(2);
             this.COM_list.Name = "COM_list";
             this.COM_list.Size = new System.Drawing.Size(92, 21);
             this.COM_list.TabIndex = 0;
@@ -257,9 +257,9 @@
             this.ConfigTab.Controls.Add(this.tableLayoutPanel1);
             this.ConfigTab.ForeColor = System.Drawing.SystemColors.ControlText;
             this.ConfigTab.Location = new System.Drawing.Point(4, 22);
-            this.ConfigTab.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ConfigTab.Margin = new System.Windows.Forms.Padding(2);
             this.ConfigTab.Name = "ConfigTab";
-            this.ConfigTab.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ConfigTab.Padding = new System.Windows.Forms.Padding(2);
             this.ConfigTab.Size = new System.Drawing.Size(788, 519);
             this.ConfigTab.TabIndex = 1;
             this.ConfigTab.Text = "Configuration";
@@ -269,7 +269,7 @@
             this.connectionStatus2.BackColor = System.Drawing.Color.Black;
             this.connectionStatus2.ForeColor = System.Drawing.Color.White;
             this.connectionStatus2.Location = new System.Drawing.Point(714, 0);
-            this.connectionStatus2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.connectionStatus2.Margin = new System.Windows.Forms.Padding(2);
             this.connectionStatus2.Name = "connectionStatus2";
             this.connectionStatus2.Size = new System.Drawing.Size(75, 20);
             this.connectionStatus2.TabIndex = 11;
@@ -320,7 +320,7 @@
             // upload_to_device_button
             // 
             this.upload_to_device_button.Location = new System.Drawing.Point(91, 332);
-            this.upload_to_device_button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.upload_to_device_button.Margin = new System.Windows.Forms.Padding(2);
             this.upload_to_device_button.Name = "upload_to_device_button";
             this.upload_to_device_button.Size = new System.Drawing.Size(96, 46);
             this.upload_to_device_button.TabIndex = 5;
@@ -331,7 +331,7 @@
             // read_from_file_button
             // 
             this.read_from_file_button.Location = new System.Drawing.Point(91, 274);
-            this.read_from_file_button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.read_from_file_button.Margin = new System.Windows.Forms.Padding(2);
             this.read_from_file_button.Name = "read_from_file_button";
             this.read_from_file_button.Size = new System.Drawing.Size(96, 46);
             this.read_from_file_button.TabIndex = 4;
@@ -360,7 +360,7 @@
             this.tableLayoutPanel2.Controls.Add(this.alarm_H_2_lable, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.urv_textBox2, 2, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(191, 274);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -372,7 +372,7 @@
             // 
             this.unit_ID_textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.unit_ID_textBox2.Location = new System.Drawing.Point(3, 55);
-            this.unit_ID_textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.unit_ID_textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.unit_ID_textBox2.Multiline = true;
             this.unit_ID_textBox2.Name = "unit_ID_textBox2";
             this.unit_ID_textBox2.Size = new System.Drawing.Size(95, 47);
@@ -383,7 +383,7 @@
             // 
             this.lrv_textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lrv_textBox2.Location = new System.Drawing.Point(103, 55);
-            this.lrv_textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lrv_textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.lrv_textBox2.Multiline = true;
             this.lrv_textBox2.Name = "lrv_textBox2";
             this.lrv_textBox2.Size = new System.Drawing.Size(95, 47);
@@ -394,7 +394,7 @@
             // 
             this.alarm_L_textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.alarm_L_textBox2.Location = new System.Drawing.Point(303, 55);
-            this.alarm_L_textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.alarm_L_textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.alarm_L_textBox2.Multiline = true;
             this.alarm_L_textBox2.Name = "alarm_L_textBox2";
             this.alarm_L_textBox2.Size = new System.Drawing.Size(95, 47);
@@ -405,7 +405,7 @@
             // 
             this.alarm_H_textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.alarm_H_textBox2.Location = new System.Drawing.Point(403, 55);
-            this.alarm_H_textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.alarm_H_textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.alarm_H_textBox2.Multiline = true;
             this.alarm_H_textBox2.Name = "alarm_H_textBox2";
             this.alarm_H_textBox2.Size = new System.Drawing.Size(96, 47);
@@ -476,7 +476,7 @@
             // 
             this.urv_textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.urv_textBox2.Location = new System.Drawing.Point(203, 55);
-            this.urv_textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.urv_textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.urv_textBox2.Multiline = true;
             this.urv_textBox2.Name = "urv_textBox2";
             this.urv_textBox2.Size = new System.Drawing.Size(95, 47);
@@ -486,7 +486,7 @@
             // save_to_file_button
             // 
             this.save_to_file_button.Location = new System.Drawing.Point(91, 141);
-            this.save_to_file_button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.save_to_file_button.Margin = new System.Windows.Forms.Padding(2);
             this.save_to_file_button.Name = "save_to_file_button";
             this.save_to_file_button.Size = new System.Drawing.Size(96, 46);
             this.save_to_file_button.TabIndex = 2;
@@ -497,7 +497,7 @@
             // read_from_device_button
             // 
             this.read_from_device_button.Location = new System.Drawing.Point(91, 83);
-            this.read_from_device_button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.read_from_device_button.Margin = new System.Windows.Forms.Padding(2);
             this.read_from_device_button.Name = "read_from_device_button";
             this.read_from_device_button.Size = new System.Drawing.Size(96, 46);
             this.read_from_device_button.TabIndex = 1;
@@ -525,7 +525,7 @@
             this.tableLayoutPanel1.Controls.Add(this.unit_id_lable, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.unit_ID_textBox, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(191, 83);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -537,7 +537,7 @@
             // 
             this.alarm_H_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.alarm_H_textBox.Location = new System.Drawing.Point(403, 55);
-            this.alarm_H_textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.alarm_H_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.alarm_H_textBox.Multiline = true;
             this.alarm_H_textBox.Name = "alarm_H_textBox";
             this.alarm_H_textBox.ReadOnly = true;
@@ -549,7 +549,7 @@
             // 
             this.alarm_L_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.alarm_L_textBox.Location = new System.Drawing.Point(303, 55);
-            this.alarm_L_textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.alarm_L_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.alarm_L_textBox.Multiline = true;
             this.alarm_L_textBox.Name = "alarm_L_textBox";
             this.alarm_L_textBox.ReadOnly = true;
@@ -561,7 +561,7 @@
             // 
             this.urv_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.urv_textBox.Location = new System.Drawing.Point(203, 55);
-            this.urv_textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.urv_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.urv_textBox.Multiline = true;
             this.urv_textBox.Name = "urv_textBox";
             this.urv_textBox.ReadOnly = true;
@@ -573,7 +573,7 @@
             // 
             this.lrv_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lrv_textBox.Location = new System.Drawing.Point(103, 55);
-            this.lrv_textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lrv_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.lrv_textBox.Multiline = true;
             this.lrv_textBox.Name = "lrv_textBox";
             this.lrv_textBox.ReadOnly = true;
@@ -645,7 +645,7 @@
             // 
             this.unit_ID_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.unit_ID_textBox.Location = new System.Drawing.Point(3, 55);
-            this.unit_ID_textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.unit_ID_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.unit_ID_textBox.Multiline = true;
             this.unit_ID_textBox.Name = "unit_ID_textBox";
             this.unit_ID_textBox.ReadOnly = true;
@@ -665,7 +665,7 @@
             this.MonitoringTab.Controls.Add(this.chart1);
             this.MonitoringTab.Location = new System.Drawing.Point(4, 22);
             this.MonitoringTab.Name = "MonitoringTab";
-            this.MonitoringTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.MonitoringTab.Padding = new System.Windows.Forms.Padding(3);
             this.MonitoringTab.Size = new System.Drawing.Size(788, 519);
             this.MonitoringTab.TabIndex = 2;
             this.MonitoringTab.Text = "Monitor";
@@ -675,7 +675,7 @@
             this.connectionStatus3.BackColor = System.Drawing.Color.Black;
             this.connectionStatus3.ForeColor = System.Drawing.Color.White;
             this.connectionStatus3.Location = new System.Drawing.Point(714, 254);
-            this.connectionStatus3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.connectionStatus3.Margin = new System.Windows.Forms.Padding(2);
             this.connectionStatus3.Multiline = true;
             this.connectionStatus3.Name = "connectionStatus3";
             this.connectionStatus3.Size = new System.Drawing.Size(75, 26);
@@ -686,7 +686,7 @@
             // 
             this.LoggedScaled.FormattingEnabled = true;
             this.LoggedScaled.Location = new System.Drawing.Point(5, 284);
-            this.LoggedScaled.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LoggedScaled.Margin = new System.Windows.Forms.Padding(2);
             this.LoggedScaled.Name = "LoggedScaled";
             this.LoggedScaled.Size = new System.Drawing.Size(367, 238);
             this.LoggedScaled.TabIndex = 16;
@@ -695,7 +695,7 @@
             // 
             this.LoggedRaw.FormattingEnabled = true;
             this.LoggedRaw.Location = new System.Drawing.Point(397, 284);
-            this.LoggedRaw.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LoggedRaw.Margin = new System.Windows.Forms.Padding(2);
             this.LoggedRaw.Name = "LoggedRaw";
             this.LoggedRaw.Size = new System.Drawing.Size(388, 238);
             this.LoggedRaw.TabIndex = 15;
@@ -703,7 +703,7 @@
             // StopMonitoringButton
             // 
             this.StopMonitoringButton.Location = new System.Drawing.Point(237, 254);
-            this.StopMonitoringButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StopMonitoringButton.Margin = new System.Windows.Forms.Padding(2);
             this.StopMonitoringButton.Name = "StopMonitoringButton";
             this.StopMonitoringButton.Size = new System.Drawing.Size(111, 25);
             this.StopMonitoringButton.TabIndex = 14;
@@ -714,7 +714,7 @@
             // MonitorRawButton
             // 
             this.MonitorRawButton.Location = new System.Drawing.Point(122, 254);
-            this.MonitorRawButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MonitorRawButton.Margin = new System.Windows.Forms.Padding(2);
             this.MonitorRawButton.Name = "MonitorRawButton";
             this.MonitorRawButton.Size = new System.Drawing.Size(111, 25);
             this.MonitorRawButton.TabIndex = 12;
@@ -725,7 +725,7 @@
             // MonitorScaledButton
             // 
             this.MonitorScaledButton.Location = new System.Drawing.Point(6, 254);
-            this.MonitorScaledButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MonitorScaledButton.Margin = new System.Windows.Forms.Padding(2);
             this.MonitorScaledButton.Name = "MonitorScaledButton";
             this.MonitorScaledButton.Size = new System.Drawing.Size(111, 25);
             this.MonitorScaledButton.TabIndex = 11;
@@ -735,24 +735,24 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(5, 6);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.Blue;
-            series3.Legend = "Legend1";
-            series3.Name = "Scaled value";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series4.Legend = "Legend1";
-            series4.Name = "Raw value";
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Blue;
+            series1.Legend = "Legend1";
+            series1.Name = "Scaled value";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series2.Legend = "Legend1";
+            series2.Name = "Raw value";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(778, 242);
             this.chart1.TabIndex = 10;
             this.chart1.Text = "chart1";
@@ -761,16 +761,16 @@
             // 
             this.openFileDialogSSC.FileName = "openFileDialog1";
             // 
-            // Form1
+            // SoftSensConf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(796, 547);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "SoftSensConf";
+            this.Text = "SoftSensConf";
             this.tabControl1.ResumeLayout(false);
             this.Connection.ResumeLayout(false);
             this.Connection.PerformLayout();

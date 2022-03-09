@@ -16,14 +16,14 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Oblig_1_OGC
 {
-    public partial class Form1 : Form
+    public partial class SoftSensConf : Form
     {
         List<float> scaledReading = new List<float>();
         List<float> rawReading = new List<float>();
         List<string> timeStampScaled = new List<string>();
         List<string> timeStampRaw = new List<string>();
         
-        public Form1()
+        public SoftSensConf()
         {
             InitializeComponent();
 
